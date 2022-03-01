@@ -6,7 +6,7 @@ function PubList(props: { pubs: Data[] | undefined }) {
   return (
     <ul className={classes.list}>
       {props.pubs?.map((pub) => (
-        <PubItem key={pub.story_id} pub={pub} />
+        <PubItem key={pub.objectID} pub={pub} />
       ))}
     </ul>
   );

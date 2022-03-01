@@ -27,13 +27,14 @@ const Home: NextPage = (props: { children?: ReactNode; pubs?: DataApi }) => {
   return (
     <Fragment>
       <SearchForm onQuery={queryHandler} />
-      <h1>Start</h1>
+      <h1>Publications</h1>
       <PubList pubs={data?.hits} />
     </Fragment>
   );
 };
 
 export async function getStaticProps() {
+  console.log('static props called');
   try {
     const data = await searchPubs('reactjs');
     return {
