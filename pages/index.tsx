@@ -1,18 +1,15 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, ReactNode, useState } from 'react';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
 import SearchForm from '../components/search/SearchForm';
 
-const Home: NextPage = () => {
-  const [data, setData] = useState({});
+import searchPubs from '../services/pubs';
+
+const Home: NextPage = (props: { children?: ReactNode; pubs?: string }) => {
+  const [data, setData] = useState(props.pubs);
 
   async function loadData(query: string) {
     try {
-      const response = await fetch(`/api/data?query=${query}`, {
-        method: 'GET',
-      });
-      const data = await response.json();
+      const data = await searchPubs(query);
       setData(data);
       console.log(data);
     } catch (error) {
@@ -20,12 +17,8 @@ const Home: NextPage = () => {
     }
   }
 
-  useEffect(() => {
-    loadData('reactjs');
-  }, []);
-
-  async function queryHandler(searchData: object) {
-    console.log(searchData);
+  async function queryHandler(searchData: { query: string }) {
+    await loadData(searchData.query);
   }
 
   return (
@@ -35,5 +28,25 @@ const Home: NextPage = () => {
     </Fragment>
   );
 };
+
+export async function getStaticProps() {
+  try {
+    const data = await searchPubs('reactjs');
+    return {
+      props: {
+        pubs: data,
+      },
+      revalidate: 60, // 60 seconds
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        pubs: {},
+      },
+      revalidate: 60, // 60 seconds
+    };
+  }
+}
 
 export default Home;

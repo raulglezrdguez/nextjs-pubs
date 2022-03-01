@@ -11,9 +11,6 @@ function MainNavigation() {
           <li>
             <Link href="/">All Pubs</Link>
           </li>
-          <li>
-            <Link href="/new-pub">Add New Pub</Link>
-          </li>
         </ul>
       </nav>
     </header>
