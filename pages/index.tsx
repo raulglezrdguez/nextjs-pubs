@@ -3,14 +3,17 @@ import type { NextPage } from 'next';
 import SearchForm from '../components/search/SearchForm';
 
 import searchPubs from '../services/pubs';
+import PubList from '../components/pub/PubList';
+import { DataApi } from '../models/types';
 
-const Home: NextPage = (props: { children?: ReactNode; pubs?: string }) => {
+const Home: NextPage = (props: { children?: ReactNode; pubs?: DataApi }) => {
   const [data, setData] = useState(props.pubs);
 
   async function loadData(query: string) {
     try {
       const data = await searchPubs(query);
       setData(data);
+      console.log('**************************');
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -25,6 +28,7 @@ const Home: NextPage = (props: { children?: ReactNode; pubs?: string }) => {
     <Fragment>
       <SearchForm onQuery={queryHandler} />
       <h1>Start</h1>
+      <PubList pubs={data?.hits} />
     </Fragment>
   );
 };
