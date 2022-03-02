@@ -39,7 +39,7 @@ const Home: NextPage = (props: { children?: ReactNode; pubs?: DataApi }) => {
 export async function getStaticProps() {
   console.log('static props called');
   try {
-    const data = await searchPubs('reactjs');
+    const data = await searchPubs({ query: 'reactjs', page: '0' });
     return {
       props: {
         pubs: data,
