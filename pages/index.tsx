@@ -4,30 +4,33 @@ import SearchForm from '../components/search/SearchForm';
 
 import searchPubs from '../services/pubs';
 import PubList from '../components/pub/PubList';
-import { DataApi } from '../models/types';
+import { DataApi, DataSearch } from '../models/types';
+import Head from 'next/head';
 
 const Home: NextPage = (props: { children?: ReactNode; pubs?: DataApi }) => {
   const [data, setData] = useState(props.pubs);
 
-  async function loadData(query: string) {
+  async function loadData(searchData: DataSearch) {
     try {
-      const data = await searchPubs(query);
+      const data = await searchPubs(searchData);
       setData(data);
-      console.log('**************************');
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function queryHandler(searchData: { query: string }) {
-    await loadData(searchData.query);
+  async function queryHandler(searchData: DataSearch) {
+    await loadData(searchData);
   }
 
   return (
     <Fragment>
+      <Head>
+        <title>Nextjs pubs</title>
+        <meta name="description" content="Search a list of publications!" />
+      </Head>
       <SearchForm onQuery={queryHandler} />
-      <h1>Publications</h1>
+      <h1>Publicaciones</h1>
       <PubList pubs={data?.hits} />
     </Fragment>
   );

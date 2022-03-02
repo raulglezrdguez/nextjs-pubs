@@ -29,3 +29,8 @@ export type DataApi = {
   processingTimeMS: number;
   query: string;
 };
+
+export type DataSearch = {
+  query: string;
+  page: string;
+};

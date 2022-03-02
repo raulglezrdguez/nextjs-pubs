@@ -5,19 +5,22 @@ import classes from './PubItem.module.css';
 
 function PubItem(props: { pub: Data }) {
   function getDateStr(date: string) {
-    const minute = 60000; // 1000 * 60
-    const hour = 3600000; // 1000 * 60 * 60;
+    let minute = 60000; // 1000 * 60
+    let hour = 3600000; // 1000 * 60 * 60;
     let day = 24 * hour;
     const week = 7 * day;
     const currentDate = new Date().getTime();
     const dataDate = new Date(date).getTime();
     const diff = currentDate - dataDate;
     if (diff < hour) {
-      return Math.round(diff / minute).toString() + ' minutes ago';
+      minute = Math.round(diff / minute);
+      return `hace ${minute} ` + (minute > 1 ? 'minutos' : 'minuto');
     } else if (diff < day) {
-      return Math.round(diff / hour).toString() + ' hours ago';
+      hour = Math.round(diff / hour);
+      return `hace ${hour} ` + (hour > 1 ? 'horas' : 'hora');
     } else if (diff < week) {
-      return Math.round(diff / day).toString() + ' days ago';
+      day = Math.round(diff / day);
+      return `hace ${day} ` + (day > 1 ? 'días' : 'día');
     } else {
       const theDate = new Date(date);
       day = theDate.getDate();

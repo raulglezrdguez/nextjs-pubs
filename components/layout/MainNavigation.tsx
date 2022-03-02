@@ -9,7 +9,7 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link href="/">All Pubs</Link>
+            <Link href="/">Publicaciones</Link>
           </li>
         </ul>
       </nav>

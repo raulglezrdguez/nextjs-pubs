@@ -1,10 +1,11 @@
-import { DataApi } from '../models/types';
+import { DataApi, DataSearch } from '../models/types';
 
-async function searchPubs(query: string): Promise<DataApi> {
-  console.log('service pubs called');
+async function searchPubs(searchData: DataSearch): Promise<DataApi> {
+  const { query, page } = searchData;
+  console.log(query, page);
   try {
     const response = await fetch(
-      `http://localhost:3000/api/data?query=${query}`,
+      `https://hn.algolia.com/api/v1/search_by_date?query=${query}&page=${page}`,
       {
         method: 'GET',
       }
